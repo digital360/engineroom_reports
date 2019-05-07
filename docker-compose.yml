@@ -1,0 +1,28 @@
+version: '3.5'
+services:
+    php:
+      ports: 
+        - "8000:80"
+      container_name: "reports_php"
+      hostname: reports.engineroom.$USER.dev
+      image: digital360/php-nginx-alpine
+      volumes:
+        - ./app:/var/www/html
+        - /etc/timezone:/etc/timezone:ro
+        - ./app/php.ini:/usr/local/etc/php/php.ini
+      environment:
+        - APP_URL=https://reports.engineroom.$USER.dev
+        - REDIS_PORT=6379
+        - VIRTUAL_HOST=reports.engineroom.$USER.dev
+        - SERVER_ROOT=/var/www/html/public
+    redis:
+      container_name: "reports_redis"
+      image: "redis:alpine"
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis_data:/var/lib/redis
+        - /etc/timezone:/etc/timezone:ro
+        - /etc/localtime:/etc/localtime:ro
+volumes:
+  redis_data:
