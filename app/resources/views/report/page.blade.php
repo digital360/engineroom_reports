@@ -57,6 +57,7 @@
 
                 <div>
                     <p>This is a report with ID: {{ $report_id }}.</p>
+                    <p>Page {{ $page }}</p>
                 </div>
             </div>
         </div>
