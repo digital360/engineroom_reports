@@ -9,7 +9,6 @@ services:
       volumes:
         - ./app:/var/www/html
         - /etc/timezone:/etc/timezone:ro
-        - ./app/php.ini:/usr/local/etc/php/php.ini
       environment:
         - APP_URL=https://reports.engineroom.$USER.dev
         - REDIS_PORT=6379
