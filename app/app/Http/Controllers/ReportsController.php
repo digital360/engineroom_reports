@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 
 class ReportsController extends Controller
 {
-    public function report($reportId, $page = null): void
+    public function report($reportId, $page = null)
     {
-        echo 'Hello world';
+        return view('report.page', [
+            'report_id' => $reportId
+        ]);
     }
 }
