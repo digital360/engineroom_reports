@@ -1,3 +1,4 @@
+FROM surnet/alpine-wkhtmltopdf:3.9-0.12.5-full as wkhtmltopdf
 FROM alpine:edge as base
 LABEL builder=true
 
@@ -46,7 +47,6 @@ apk add \
     php7-iconv \
     php7-json \
     php7-mbstring \
-    php7-mongodb \
     php7-oauth \
     php7-opcache \
     php7-openssl \
@@ -62,6 +62,37 @@ apk add \
     php7-xmlwriter \
     php7-zip \
     php7-zlib
+
+
+# Install dependencies for wkhtmltopdf
+RUN apk add --no-cache \
+    libstdc++ \
+    libx11 \
+    libxrender \
+    libxext \
+    libssl1.1 \
+    ca-certificates \
+    fontconfig \
+    freetype \
+    ttf-dejavu \
+    ttf-droid \
+    ttf-freefont \
+    ttf-liberation \
+    ttf-ubuntu-font-family \
+&& apk add --no-cache --virtual .build-deps \
+    msttcorefonts-installer \
+\
+# Install microsoft fonts
+&& update-ms-fonts \
+&& fc-cache -f \
+\
+# Clean up when done
+&& rm -rf /tmp/* \
+&& apk del .build-deps
+
+# Copy wkhtmltopdf files from docker-wkhtmltopdf image
+COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/wkhtmltopdf
+
 
 # Set up cron
 COPY crontab /var/spool/cron/crontabs/www-data

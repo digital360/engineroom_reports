@@ -5,7 +5,9 @@ services:
         - "8000:80"
       container_name: "reports_php"
       hostname: reports.engineroom.$USER.dev
-      image: digital360/php-nginx-alpine
+      build:
+        context: ./docker/php
+#      image: digital360/php-nginx-alpine
       volumes:
         - ./app:/var/www/html
         - /etc/timezone:/etc/timezone:ro
