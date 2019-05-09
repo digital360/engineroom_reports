@@ -15,5 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/reports/test', 'ReportsController@test');
+
 Route::get('/reports/{reportId}/export', 'ReportsController@pdf');
 Route::get('/reports/{reportId}/{page?}', 'ReportsController@report');

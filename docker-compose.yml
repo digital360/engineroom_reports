@@ -1,8 +1,6 @@
 version: '3.5'
 services:
     php:
-      ports: 
-        - "8000:80"
       container_name: "reports_php"
       hostname: reports.engineroom.$USER.dev
       build:
@@ -11,6 +9,10 @@ services:
       volumes:
         - ./app:/var/www/html
         - /etc/timezone:/etc/timezone:ro
+      networks:
+        - engineroom
+      extra_hosts:
+        - "api.engineroom.adriannorman.dev:172.19.0.5"
       environment:
         - APP_URL=https://reports.engineroom.$USER.dev
         - REDIS_PORT=6379
@@ -20,10 +22,14 @@ services:
       container_name: "reports_redis"
       image: "redis:alpine"
       ports:
-        - "6379:6379"
+        - "6300:6379"
       volumes:
         - redis_data:/var/lib/redis
         - /etc/timezone:/etc/timezone:ro
         - /etc/localtime:/etc/localtime:ro
 volumes:
   redis_data:
+networks:
+  engineroom:
+    external:
+      name: docker_default

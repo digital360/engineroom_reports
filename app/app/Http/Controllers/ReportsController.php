@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Publishing\Entities\Publication;
-use Illuminate\Http\Request;
+use App\Engineroom\Client;
 use Knp\Snappy\Pdf;
 
 class ReportsController extends Controller
@@ -38,5 +38,13 @@ class ReportsController extends Controller
         }
 
         return $publication;
+    }
+
+    public function test()
+    {
+        $client = app(Client::class);
+        $response = $client->request('GET', 'plan/5ae94a2f794a4c10cc2d5fa3');
+
+        return response()->json($response->getBody()->getContents());
     }
 }
