@@ -10,10 +10,12 @@ class Page
 {
     protected $publication;
     protected $pageTemplate;
+    protected $model;
 
-    public function __construct(Publication $publication)
+    public function __construct(Publication $publication, array $model = [])
     {
         $this->publication = $publication;
+        $this->model = $model;
     }
 
     public function getPublication(): Publication
@@ -23,11 +25,14 @@ class Page
 
     public function makeViewModel(): array
     {
-        return [
-            'key' => $this->publication->getKey(),
-            'page' => $this->getPageNumber(),
-            'page_count' => $this->publication->getPageCount(),
-        ];
+        return array_merge(
+            $this->model,
+            [
+                'key' => $this->publication->getKey(),
+                'page' => $this->getPageNumber(),
+                'page_count' => $this->publication->getPageCount(),
+            ]
+        );
     }
 
     public function getPageTemplate(): string

@@ -48,9 +48,9 @@ class Publication
         throw new \DomainException('Could not find page');
     }
 
-    public function addPage(): Page
+    public function addPage(array $model = []): Page
     {
-        $page = new Page($this);
+        $page = new Page($this, $model);
         $this->pages[] = $page;
 
         return $page;

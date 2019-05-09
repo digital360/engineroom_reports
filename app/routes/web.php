@@ -17,5 +17,8 @@ Route::get('/', function () {
 
 Route::get('/reports/test', 'ReportsController@test');
 
+Route::get('/reports/make-business-plan', 'ReportsController@makeBusinessPlan');
+Route::get('/reports/business-plan/{key}/{page?}', 'ReportsController@businessPlan');
+
 Route::get('/reports/{reportId}/export', 'ReportsController@pdf');
 Route::get('/reports/{reportId}/{page?}', 'ReportsController@report');
